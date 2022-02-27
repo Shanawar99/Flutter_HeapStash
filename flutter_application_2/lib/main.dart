@@ -18,11 +18,6 @@ class Quote extends StatefulWidget {
 class _QuoteState extends State<Quote> with SingleTickerProviderStateMixin {
   List<Quote1> q = [
     Quote1(
-        movie: 'Ashes',
-        director: 'Andrzej Wajda',
-        year: 1958,
-        text: 'Will there be among ashes a diamond, a sparkling beauty'),
-    Quote1(
         movie: 'Persona',
         director: 'Ingmar Bergman',
         year: 1966,
