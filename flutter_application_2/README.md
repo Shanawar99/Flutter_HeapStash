@@ -2,7 +2,7 @@
 App shows favorite movie quotes with deletion feature.
 
 ## User Interface
-![image](https://user-images.githubusercontent.com/49908163/155935831-8b8cb4b8-1e8c-4804-bbaa-892b02aa8a49.png)
+![image](https://user-images.githubusercontent.com/49908163/155935916-6e871a6b-633f-4b58-b74d-1372bd8ccc77.png)
 
 
 ## Getting Started
