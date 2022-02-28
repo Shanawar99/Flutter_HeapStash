@@ -1,6 +1,9 @@
-# flutter_application_2
+# Movies Quotes App
+App shows favorite movie quotes with deletion feature.
 
-A new Flutter project.
+## User Interface
+![image](https://user-images.githubusercontent.com/49908163/155935831-8b8cb4b8-1e8c-4804-bbaa-892b02aa8a49.png)
+
 
 ## Getting Started
 
