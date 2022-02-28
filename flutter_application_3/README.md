@@ -2,7 +2,10 @@
 World Time App using world time api.
 
 # User Interface 
-![image](https://user-images.githubusercontent.com/49908163/155936205-1a295488-d577-4c2d-a16c-3e5fc2cf227b.png)
+![image](https://user-images.githubusercontent.com/49908163/156036397-a79eed62-3550-4084-b729-8c6cee9c4cfb.png)
+![image](https://user-images.githubusercontent.com/49908163/156036452-147545bd-86fe-437c-a4ea-db5849e7744b.png)
+![image](https://user-images.githubusercontent.com/49908163/156036500-c66ababa-9ab6-4897-8329-3e940c444f19.png)
+
 
 
 ## Getting Started
