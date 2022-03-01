@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -27,9 +28,12 @@ class _HomeState extends State<Home> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
                 child: const Text('Login'),
               ),
+              //  Register Button
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Colors.blue[500], // background
@@ -37,9 +41,13 @@ class _HomeState extends State<Home> {
                     fixedSize: const Size(230, 40),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signup');
+                },
                 child: const Text('Register'),
-              )
+              ),
+              // FloatingActionButton.extended(
+              //     onPressed: () {}, label: Text('Test'))
             ],
           ),
         ));
