@@ -1,7 +1,7 @@
 # chat_app
 
 A new Flutter project.
-![image](https://user-images.githubusercontent.com/49908163/156302126-9d57b33c-8b9e-426d-a0be-025d79097be3.png)
+![image](https://user-images.githubusercontent.com/49908163/156302219-bee83281-5225-457d-b9c0-6db9f8246fa2.png)
 
 
 
