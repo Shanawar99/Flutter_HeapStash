@@ -9,9 +9,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(initialRoute: '/', routes: {
-    '/': (context) => Home(),
-    '/login': (context) => Login(),
-    '/signup': (context) => SignUp(),
-    '/chat': (context) => Chat(),
+    '/': (context) => const Home(),
+    '/login': (context) => const Login(),
+    '/signup': (context) => const SignUp(),
+    '/chat': (context) => const Chat(),
   }));
 }
