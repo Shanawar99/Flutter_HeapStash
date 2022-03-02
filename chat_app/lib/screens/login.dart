@@ -12,6 +12,7 @@ class _LoginState extends State<Login> {
   late String email;
   late String password;
   final auth = FirebaseAuth.instance;
+  User? user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +43,19 @@ class _LoginState extends State<Login> {
               ),
             ),
             ElevatedButton(
-              onPressed: () async {},
+              onPressed: () async {
+                try {
+                  UserCredential userCredential =
+                      await auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                  user = userCredential.user;
+                  if (user != null) {
+                    Navigator.pushNamed(context, '/chat');
+                  }
+                } catch (e) {
+                  print(e);
+                }
+              },
               child: const Text('Sign In'),
             )
           ],

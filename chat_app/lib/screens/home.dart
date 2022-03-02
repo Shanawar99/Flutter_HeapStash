@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/signup');
                 },
-                child: const Text('Register'),
+                child: const Text('Sign Up'),
               ),
               // FloatingActionButton.extended(
               //     onPressed: () {}, label: Text('Test'))

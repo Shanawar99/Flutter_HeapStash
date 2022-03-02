@@ -25,15 +25,15 @@ class _SignUpState extends State<SignUp> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              onChanged: (value) {
-                name = value;
-              },
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Enter your Name',
-              ),
-            ),
+            // TextField(
+            //   onChanged: (value) {
+            //     name = value;
+            //   },
+            //   decoration: const InputDecoration(
+            //     border: UnderlineInputBorder(),
+            //     labelText: 'Enter your Name',
+            //   ),
+            // ),
             TextField(
               onChanged: (value) {
                 email = value;
