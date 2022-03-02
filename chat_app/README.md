@@ -1,6 +1,9 @@
 # chat_app
 
 A new Flutter project.
+![image](https://user-images.githubusercontent.com/49908163/156302126-9d57b33c-8b9e-426d-a0be-025d79097be3.png)
+
+
 
 ## Getting Started
 
