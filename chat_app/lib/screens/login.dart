@@ -18,45 +18,62 @@ class _LoginState extends State<Login> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sign In'),
+          backgroundColor: Color.fromARGB(255, 243, 33, 156),
         ),
         body: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              onChanged: (value) {
-                email = value;
-              },
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Enter your Email',
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              child: TextField(
+                onChanged: (value) {
+                  email = value;
+                },
+                decoration: const InputDecoration(
+                    border: UnderlineInputBorder(), hintText: 'Email Address'),
               ),
             ),
-            TextField(
-              onChanged: (value) {
-                password = value;
-              },
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Enter your password',
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
+              child: TextField(
+                onChanged: (value) {
+                  password = value;
+                },
+                obscureText: true,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  hintText: 'Password',
+                ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  UserCredential userCredential =
-                      await auth.signInWithEmailAndPassword(
-                          email: email, password: password);
-                  user = userCredential.user;
-                  if (user != null) {
-                    Navigator.pushNamed(context, '/chat');
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 243, 33, 156), // background
+                    onPrimary: Colors.white, // foreground
+                    fixedSize: const Size(230, 40),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0))),
+                onPressed: () async {
+                  try {
+                    UserCredential userCredential =
+                        await auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                    user = userCredential.user;
+                    if (user != null) {
+                      Navigator.pushNamed(context, '/chat');
+                    }
+                  } catch (e) {
+                    print(e);
                   }
-                } catch (e) {
-                  print(e);
-                }
-              },
-              child: const Text('Sign In'),
+                },
+                child: const Text('Sign In'),
+              ),
             )
           ],
         )));
