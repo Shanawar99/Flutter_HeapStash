@@ -12,7 +12,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 243, 33, 156),
+          backgroundColor: const Color.fromARGB(255, 243, 33, 156),
           title: const Text('Chat App'),
           centerTitle: true,
         ),
@@ -21,14 +21,15 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/icon1.png',
+                'assets/icon2.png',
                 scale: 2,
               ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 243, 33, 156), // background
+                    primary:
+                        const Color.fromARGB(255, 243, 33, 156), // background
                     onPrimary: Colors.white, // foreground
                     fixedSize: const Size(230, 40),
                     shape: RoundedRectangleBorder(
@@ -45,7 +46,8 @@ class _HomeState extends State<Home> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 243, 33, 156), // background
+                      primary:
+                          const Color.fromARGB(255, 243, 33, 156), // background
                       onPrimary: Colors.white, // foreground
                       fixedSize: const Size(230, 40),
                       shape: RoundedRectangleBorder(

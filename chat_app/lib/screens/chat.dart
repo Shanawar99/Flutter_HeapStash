@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 
 final auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
+late final User loggedinUser;
 
 class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
@@ -16,7 +17,6 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   final messageController = TextEditingController();
-  late User loggedinUser;
   late String text;
   @override
   void initState() {
@@ -43,17 +43,26 @@ class _ChatState extends State<Chat> {
           title: const Text('Chat'),
           centerTitle: true,
           leading: Icon(Icons.home),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              tooltip: 'Log Out',
+              onPressed: () {
+                auth.signOut();
+              },
+            )
+          ],
           backgroundColor: Color.fromARGB(255, 243, 33, 156),
         ),
         body: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          //crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             messageStream(),
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context, '/home');
+                  },
                   child: Container(
                     height: 30,
                     width: 30,
@@ -85,9 +94,11 @@ class _ChatState extends State<Chat> {
                   child: FloatingActionButton(
                     onPressed: () {
                       messageController.clear();
-                      firestore
-                          .collection('messages')
-                          .add({'text': text, 'sender': loggedinUser.email});
+                      firestore.collection('messages').add({
+                        'text': text,
+                        'sender': loggedinUser.email,
+                        'time': DateTime.now()
+                      });
                     },
                     child: const Icon(
                       Icons.send,
@@ -110,7 +121,7 @@ class messageStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: firestore.collection('messages').snapshots(),
+      stream: firestore.collection('messages').orderBy('time').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
@@ -118,32 +129,50 @@ class messageStream extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator(
             backgroundColor: Colors.lightBlueAccent,
-          ); //const Text("Loading");
+          );
         }
-
         return Expanded(
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-              // return ListTile(
-              //   title: Text(data['text']),
-              //   subtitle: Text(data['sender']),
-              // );
-              return Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Material(
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 247, 8, 108),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                    child: Text(
-                      data['text'],
-                      textAlign: TextAlign.end,
-                    ),
+              final currentUser = loggedinUser.email;
+              bool isMe = currentUser == data['sender'];
+              return Align(
+                alignment: isMe ? Alignment.topRight : Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    crossAxisAlignment: isMe
+                        ? CrossAxisAlignment.end
+                        : CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          data['sender'],
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.blueGrey),
+                        ),
+                      ),
+                      Material(
+                        elevation: 8,
+                        borderRadius: BorderRadius.circular(20),
+                        color: isMe
+                            ? const Color.fromARGB(255, 247, 8, 108)
+                            : Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: Text(
+                            data['text'],
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
