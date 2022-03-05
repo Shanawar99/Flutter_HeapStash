@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/rendering.dart';
 
 final auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
-late final User loggedinUser;
+User? loggedinUser;
 
 class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
@@ -29,7 +28,7 @@ class _ChatState extends State<Chat> {
       final user = auth.currentUser;
       if (user != null) {
         loggedinUser = user;
-        print(loggedinUser.displayName);
+        print(loggedinUser?.displayName);
       }
     } catch (e) {
       print(e);
@@ -47,8 +46,10 @@ class _ChatState extends State<Chat> {
             IconButton(
               icon: const Icon(Icons.logout),
               tooltip: 'Log Out',
-              onPressed: () {
-                auth.signOut();
+              onPressed: () async {
+                await auth.signOut();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
               },
             )
           ],
@@ -96,8 +97,8 @@ class _ChatState extends State<Chat> {
                       messageController.clear();
                       firestore.collection('messages').add({
                         'text': text,
-                        'sender': loggedinUser.email,
-                        'time': DateTime.now()
+                        'sender': loggedinUser?.email,
+                        'time': DateTime.now().millisecondsSinceEpoch.toString()
                       });
                     },
                     child: const Icon(
@@ -138,7 +139,7 @@ class messageStream extends StatelessWidget {
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
-              final currentUser = loggedinUser.email;
+              final currentUser = loggedinUser?.email;
               bool isMe = currentUser == data['sender'];
               return Align(
                 alignment: isMe ? Alignment.topRight : Alignment.topLeft,

@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             SizedBox(
-              width: double.infinity,
+              width: 300,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 243, 33, 156), // background

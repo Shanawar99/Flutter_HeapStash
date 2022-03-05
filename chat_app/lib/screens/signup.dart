@@ -19,41 +19,59 @@ class _SignUpState extends State<SignUp> {
         appBar: AppBar(
           title: const Text('Sign Up'),
           centerTitle: true,
+          backgroundColor: Color.fromARGB(255, 243, 33, 156),
         ),
         backgroundColor: Colors.white,
         body: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              onChanged: (value) {
-                name = value;
-              },
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Enter your Name',
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              child: TextField(
+                onChanged: (value) {
+                  name = value;
+                },
+                decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: 'Enter your name'),
               ),
             ),
-            TextField(
-              onChanged: (value) {
-                email = value;
-              },
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Enter your Email',
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              child: TextField(
+                onChanged: (value) {
+                  email = value;
+                },
+                decoration: const InputDecoration(
+                    border: UnderlineInputBorder(), hintText: 'Email Address'),
               ),
             ),
-            TextField(
-              onChanged: (value) {
-                password = value;
-              },
-              obscureText: true,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: 'Enter your password',
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              child: TextField(
+                onChanged: (value) {
+                  password = value;
+                },
+                obscureText: true,
+                decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    hintText: 'Enter your password'),
               ),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 243, 33, 156), // background
+                  onPrimary: Colors.white, // foreground
+                  fixedSize: const Size(230, 40),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0))),
               onPressed: () async {
                 try {
                   final newUser = await auth.createUserWithEmailAndPassword(

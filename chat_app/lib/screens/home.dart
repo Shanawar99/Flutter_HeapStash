@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
                 scale: 2,
               ),
               SizedBox(
-                width: double.infinity,
+                width: 300,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary:
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
               ),
               //  Register Button
               SizedBox(
-                width: double.infinity,
+                width: 300,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary:
@@ -56,6 +56,23 @@ class _HomeState extends State<Home> {
                     Navigator.pushNamed(context, '/signup');
                   },
                   child: const Text('Sign Up'),
+                ),
+              ),
+              const Text('Or Sign In with:'),
+              SizedBox(
+                width: 300 / 2,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary:
+                          const Color.fromARGB(255, 243, 33, 156), // background
+                      onPrimary: Colors.white, // foreground
+                      fixedSize: const Size(230, 40),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0))),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                  child: const Text('Google'),
                 ),
               ),
             ],
