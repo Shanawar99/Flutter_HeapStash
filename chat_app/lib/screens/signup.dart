@@ -19,7 +19,7 @@ class _SignUpState extends State<SignUp> {
         appBar: AppBar(
           title: const Text('Sign Up'),
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 243, 33, 156),
+          backgroundColor: const Color.fromARGB(255, 243, 33, 156),
         ),
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -67,7 +67,8 @@ class _SignUpState extends State<SignUp> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 243, 33, 156), // background
+                  primary:
+                      const Color.fromARGB(255, 243, 33, 156), // background
                   onPrimary: Colors.white, // foreground
                   fixedSize: const Size(230, 40),
                   shape: RoundedRectangleBorder(

@@ -18,7 +18,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sign In'),
-          backgroundColor: Color.fromARGB(255, 243, 33, 156),
+          backgroundColor: const Color.fromARGB(255, 243, 33, 156),
         ),
         body: SafeArea(
             child: Column(
@@ -54,7 +54,8 @@ class _LoginState extends State<Login> {
               width: 300,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 243, 33, 156), // background
+                    primary:
+                        const Color.fromARGB(255, 243, 33, 156), // background
                     onPrimary: Colors.white, // foreground
                     fixedSize: const Size(230, 40),
                     shape: RoundedRectangleBorder(

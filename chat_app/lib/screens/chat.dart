@@ -1,7 +1,15 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:chat_app/services/storage.dart';
+import 'dart:io';
 
 final auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -26,6 +34,9 @@ class _ChatState extends State<Chat> {
   void getCurrentUser() async {
     try {
       final user = auth.currentUser;
+      if (user == null) {
+        print('user is null');
+      }
       if (user != null) {
         loggedinUser = user;
         print(loggedinUser?.displayName);
@@ -35,13 +46,20 @@ class _ChatState extends State<Chat> {
     }
   }
 
+  String getTime() {
+    var time = DateTime.now();
+    var time1 = DateFormat.jm().format(time);
+    return time1;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final FireStorage storage = FireStorage();
     return Scaffold(
         appBar: AppBar(
           title: const Text('Chat'),
           centerTitle: true,
-          leading: Icon(Icons.home),
+          leading: const Icon(Icons.home),
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
@@ -53,16 +71,24 @@ class _ChatState extends State<Chat> {
               },
             )
           ],
-          backgroundColor: Color.fromARGB(255, 243, 33, 156),
+          backgroundColor: const Color.fromARGB(255, 243, 33, 156),
         ),
         body: Column(
           children: [
-            messageStream(),
+            const messageStream(),
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context, '/home');
+                  onTap: () async {
+                    final results = await ImagePicker.platform
+                        .pickImage(source: ImageSource.gallery);
+                    // if (results == null) {
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //       const SnackBar(content: Text('No Files Selected')));
+                    //   return null;
+                    // }
+                    final path = results!.path;
+                    storage.uploadFile(path, 'abc');
                   },
                   child: Container(
                     height: 30,
@@ -98,7 +124,8 @@ class _ChatState extends State<Chat> {
                       firestore.collection('messages').add({
                         'text': text,
                         'sender': loggedinUser?.email,
-                        'time': DateTime.now().millisecondsSinceEpoch.toString()
+                        'time': getTime(),
+                        'sorttime': DateTime.now().millisecondsSinceEpoch,
                       });
                     },
                     child: const Icon(
@@ -121,8 +148,9 @@ class messageStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FireStorage storage1 = FireStorage();
     return StreamBuilder<QuerySnapshot>(
-      stream: firestore.collection('messages').orderBy('time').snapshots(),
+      stream: firestore.collection('messages').orderBy('sorttime').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
@@ -171,6 +199,15 @@ class messageStream extends StatelessWidget {
                             data['text'],
                             textAlign: TextAlign.start,
                           ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          data['time'],
+                          style: const TextStyle(
+                              fontSize: 10, color: Colors.blueGrey),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ],
