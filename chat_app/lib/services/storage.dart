@@ -9,6 +9,7 @@ class FireStorage {
 
   Future<void> uploadFile(String filePath, String fileName) async {
     File file = File(filePath);
+
     print(file);
     print('I in storage');
     try {
@@ -18,11 +19,11 @@ class FireStorage {
     }
   }
 
-  Future<void> downloadURL() async {
-    String downloadURL = await firebase_storage.FirebaseStorage.instance
-        .ref('test/abc')
+  Future<String> downloadURL(String filename) async {
+    String durl = await firebase_storage.FirebaseStorage.instance
+        .ref('test/$filename')
         .getDownloadURL();
     // Within your widgets:
-    Image.network(downloadURL);
+    return durl;
   }
 }

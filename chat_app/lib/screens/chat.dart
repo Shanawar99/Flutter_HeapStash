@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:chat_app/services/storage.dart';
 import 'dart:io';
+import 'package:path/path.dart' as p;
 
 final auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -55,6 +57,9 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     final FireStorage storage = FireStorage();
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final ImagePicker _picker = ImagePicker();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Chat'),
@@ -66,6 +71,7 @@ class _ChatState extends State<Chat> {
               tooltip: 'Log Out',
               onPressed: () async {
                 await auth.signOut();
+                await googleSignIn.signOut();
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/', (route) => false);
               },
@@ -80,15 +86,18 @@ class _ChatState extends State<Chat> {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    final results = await ImagePicker.platform
-                        .pickImage(source: ImageSource.gallery);
-                    // if (results == null) {
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //       const SnackBar(content: Text('No Files Selected')));
-                    //   return null;
-                    // }
-                    final path = results!.path;
-                    storage.uploadFile(path, 'abc');
+                    // Pick an image
+                    final XFile? image =
+                        await _picker.pickImage(source: ImageSource.gallery);
+                    if (image == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('No Files Selected')));
+                    }
+                    final path = image!.path;
+                    String filename = p.basename(image.path);
+                    storage.uploadFile(path, filename);
+                    String downloadURL = await storage.downloadURL(filename);
+                    Image.network(downloadURL);
                   },
                   child: Container(
                     height: 30,
@@ -148,7 +157,6 @@ class messageStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FireStorage storage1 = FireStorage();
     return StreamBuilder<QuerySnapshot>(
       stream: firestore.collection('messages').orderBy('sorttime').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
