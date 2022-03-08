@@ -13,7 +13,7 @@ class TaskScreen extends StatelessWidget {
       backgroundColor: Colors.lightBlue,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           showModalBottomSheet(
               context: context, builder: (context) => AddTask());
@@ -103,7 +103,7 @@ class _TaskCheckBoxState extends State<TaskCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-        activeColor: Colors.lightBlue,
+        activeColor: Colors.lightBlueAccent,
         value: isChecked,
         onChanged: (newValue) {
           setState(() {
