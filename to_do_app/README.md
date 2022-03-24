@@ -1,6 +1,7 @@
 # to_do_app
 
-A new Flutter project.
+![image](https://user-images.githubusercontent.com/49908163/159901118-9ca0da07-bacb-4e7d-8c6f-61ce519743e4.png)
+![image](https://user-images.githubusercontent.com/49908163/159901246-59e2377e-1f96-48d7-80b7-f3aabc696d22.png)
 
 ## Getting Started
 
