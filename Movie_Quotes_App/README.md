@@ -1,5 +1,5 @@
 # Movies Quotes App
-App shows favorite movie quotes with deletion feature.
+App shows favorite movie quotes with the deletion feature.
 
 ## User Interface
 ![image](https://user-images.githubusercontent.com/49908163/155935916-6e871a6b-633f-4b58-b74d-1372bd8ccc77.png)
