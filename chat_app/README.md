@@ -1,8 +1,5 @@
 # chat_app
-
-A new Flutter project.
-![image](https://user-images.githubusercontent.com/49908163/156302219-bee83281-5225-457d-b9c0-6db9f8246fa2.png)
-
+Chat App with Firebase at backend
 
 https://user-images.githubusercontent.com/49908163/159898890-0cbdab9f-ed19-46a2-bd04-66793111eae1.mp4
 
